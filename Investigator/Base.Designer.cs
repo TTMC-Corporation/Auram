@@ -37,7 +37,12 @@ namespace Investigator
 			openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			property = new System.Windows.Forms.PropertyGrid();
+			editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			setStringToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			removeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			getHashToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			connectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			menuStrip1.SuspendLayout();
 			SuspendLayout();
 			// 
@@ -51,25 +56,26 @@ namespace Investigator
 			Viewer.Indent = 30;
 			Viewer.Location = new System.Drawing.Point(12, 27);
 			Viewer.Name = "Viewer";
-			Viewer.Size = new System.Drawing.Size(870, 572);
+			Viewer.Size = new System.Drawing.Size(1176, 572);
 			Viewer.TabIndex = 2;
 			Viewer.AfterSelect += Viewer_AfterSelect;
 			// 
 			// TXT
 			// 
-			TXT.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left;
-			TXT.AutoSize = true;
-			TXT.Font = new System.Drawing.Font("Roboto", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+			TXT.Anchor = System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right;
+			TXT.Font = new System.Drawing.Font("Roboto", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
 			TXT.ForeColor = System.Drawing.Color.Black;
 			TXT.Location = new System.Drawing.Point(12, 602);
 			TXT.Name = "TXT";
-			TXT.Size = new System.Drawing.Size(366, 19);
+			TXT.Size = new System.Drawing.Size(1176, 19);
 			TXT.TabIndex = 3;
-			TXT.Text = "TTMC Corporation » Auram Investigator v0.0";
+			TXT.Text = "TTMC Corporation » Auram Investigator";
+			TXT.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+			TXT.DoubleClick += TXT_DoubleClick;
 			// 
 			// menuStrip1
 			// 
-			menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { fileToolStripMenuItem });
+			menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] { fileToolStripMenuItem, editToolStripMenuItem, toolsToolStripMenuItem });
 			menuStrip1.Location = new System.Drawing.Point(0, 0);
 			menuStrip1.Name = "menuStrip1";
 			menuStrip1.Size = new System.Drawing.Size(1200, 24);
@@ -78,7 +84,7 @@ namespace Investigator
 			// 
 			// fileToolStripMenuItem
 			// 
-			fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { openToolStripMenuItem, saveToolStripMenuItem, saveAsToolStripMenuItem });
+			fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { openToolStripMenuItem, saveToolStripMenuItem, saveAsToolStripMenuItem, connectToolStripMenuItem });
 			fileToolStripMenuItem.Name = "fileToolStripMenuItem";
 			fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
 			fileToolStripMenuItem.Text = "File";
@@ -86,32 +92,65 @@ namespace Investigator
 			// openToolStripMenuItem
 			// 
 			openToolStripMenuItem.Name = "openToolStripMenuItem";
-			openToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
+			openToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			openToolStripMenuItem.Text = "Open";
 			openToolStripMenuItem.Click += openToolStripMenuItem_Click;
 			// 
 			// saveToolStripMenuItem
 			// 
 			saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-			saveToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
+			saveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			saveToolStripMenuItem.Text = "Save";
 			saveToolStripMenuItem.Click += saveToolStripMenuItem_Click;
 			// 
 			// saveAsToolStripMenuItem
 			// 
 			saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-			saveAsToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
+			saveAsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			saveAsToolStripMenuItem.Text = "Save As";
 			saveAsToolStripMenuItem.Click += saveAsToolStripMenuItem_Click;
 			// 
-			// property
+			// editToolStripMenuItem
 			// 
-			property.Anchor = System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right;
-			property.Enabled = false;
-			property.Location = new System.Drawing.Point(888, 27);
-			property.Name = "property";
-			property.Size = new System.Drawing.Size(300, 572);
-			property.TabIndex = 5;
+			editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { setStringToolStripMenuItem, removeToolStripMenuItem });
+			editToolStripMenuItem.Name = "editToolStripMenuItem";
+			editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
+			editToolStripMenuItem.Text = "Edit";
+			// 
+			// setStringToolStripMenuItem
+			// 
+			setStringToolStripMenuItem.Name = "setStringToolStripMenuItem";
+			setStringToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
+			setStringToolStripMenuItem.Text = "Set string";
+			setStringToolStripMenuItem.Click += setStringToolStripMenuItem_Click;
+			// 
+			// removeToolStripMenuItem
+			// 
+			removeToolStripMenuItem.Name = "removeToolStripMenuItem";
+			removeToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
+			removeToolStripMenuItem.Text = "Remove";
+			removeToolStripMenuItem.Click += removeToolStripMenuItem_Click;
+			// 
+			// toolsToolStripMenuItem
+			// 
+			toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] { getHashToolStripMenuItem });
+			toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
+			toolsToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
+			toolsToolStripMenuItem.Text = "Tools";
+			// 
+			// getHashToolStripMenuItem
+			// 
+			getHashToolStripMenuItem.Name = "getHashToolStripMenuItem";
+			getHashToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
+			getHashToolStripMenuItem.Text = "Get Hash";
+			getHashToolStripMenuItem.Click += getHashToolStripMenuItem_Click;
+			// 
+			// connectToolStripMenuItem
+			// 
+			connectToolStripMenuItem.Name = "connectToolStripMenuItem";
+			connectToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			connectToolStripMenuItem.Text = "Connect";
+			connectToolStripMenuItem.Click += connectToolStripMenuItem_Click;
 			// 
 			// Base
 			// 
@@ -119,7 +158,6 @@ namespace Investigator
 			AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			BackColor = System.Drawing.SystemColors.Window;
 			ClientSize = new System.Drawing.Size(1200, 630);
-			Controls.Add(property);
 			Controls.Add(TXT);
 			Controls.Add(Viewer);
 			Controls.Add(menuStrip1);
@@ -128,7 +166,6 @@ namespace Investigator
 			MainMenuStrip = menuStrip1;
 			Name = "Base";
 			Text = "Investigator";
-			KeyDown += Form1_KeyDown;
 			menuStrip1.ResumeLayout(false);
 			menuStrip1.PerformLayout();
 			ResumeLayout(false);
@@ -142,8 +179,13 @@ namespace Investigator
 		private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
-		private System.Windows.Forms.PropertyGrid property;
 		private System.Windows.Forms.ToolStripMenuItem saveAsToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem setStringToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem getHashToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem removeToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem connectToolStripMenuItem;
 	}
 }
 

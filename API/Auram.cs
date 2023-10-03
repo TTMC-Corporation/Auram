@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Drawing;
+using System.Text;
 using TTMC.Debris;
 using TTMC.Tools;
 
@@ -6,6 +7,7 @@ namespace TTMC.Auram
 {
 	public class Database
 	{
+		private readonly string codename = "AUR3";
 		private string? thePath = null;
 		private Client? client = null;
 		private Handler? handler = null;
@@ -115,6 +117,10 @@ namespace TTMC.Auram
 		{
 			return Add(key, value.ToBinary());
 		}
+		public bool Add(string key, Color value)
+		{
+			return Add(key, value.ToArgb());
+		}
 		public void Set(string key, byte[] value)
 		{
 			if (client != null && handler != null)
@@ -166,6 +172,10 @@ namespace TTMC.Auram
 		public void Set(string key, DateTime value)
 		{
 			Set(key, value.ToBinary());
+		}
+		public void Set(string key, Color value)
+		{
+			Set(key, value.ToArgb());
 		}
 		public byte[] Get(string key)
 		{
@@ -241,6 +251,10 @@ namespace TTMC.Auram
 			{
 				return (T)(object)DateTime.FromBinary(BitConverter.ToInt64(Get(key)));
 			}
+			if (typeof(T) == typeof(Color))
+			{
+				return (T)(object)Color.FromArgb(BitConverter.ToInt32(Get(key)));
+			}
 			return default(T);
 		}
 		public bool Remove(string key)
@@ -266,12 +280,24 @@ namespace TTMC.Auram
 		}
 		public void Clear()
 		{
-			data.Clear();
-			newData.Clear();
+			if (client != null)
+			{
+				Packet packet = new()
+				{
+					id = 8,
+					data = new byte[0]
+				};
+				client.SendPacket(packet);
+			}
+			else
+			{
+				data.Clear();
+				newData.Clear();
+			}
 		}
 		public void Save(string path)
 		{
-			if (client != null && handler != null)
+			if (client != null)
 			{
 				Packet packet = new()
 				{
@@ -300,7 +326,7 @@ namespace TTMC.Auram
 					bytes.AddRange(temp.Value);
 				}
 				fileStream.Position = 0;
-				fileStream.Write(Encoding.UTF8.GetBytes(Core.codename));
+				fileStream.Write(Encoding.UTF8.GetBytes(codename));
 				fileStream.Write(BitConverter.GetBytes(newData.Count));
 				fileStream.Write(BitConverter.GetBytes(12 + bytes.Count()));
 				fileStream.Write(bytes.ToArray());
@@ -327,6 +353,15 @@ namespace TTMC.Auram
 			}
 			return false;
 		}
+		public void Close()
+		{
+			if (stream != null)
+			{
+				stream.Close();
+				stream.Dispose();
+				stream = null;
+			}
+		}
 		public void Load(string path)
 		{
 			if (client != null && handler != null)
@@ -341,10 +376,11 @@ namespace TTMC.Auram
 			else
 			{
 				thePath = path;
+				Close();
 				stream = File.Open(path, FileMode.OpenOrCreate);
-				byte[] codename = new byte[4];
-				stream.Read(codename, 0, 4);
-				if (Encoding.UTF8.GetString(codename) != Core.codename)
+				byte[] bytes = new byte[4];
+				stream.Read(bytes, 0, 4);
+				if (Encoding.UTF8.GetString(bytes) != codename)
 				{
 					throw new("Old version detected");
 				}

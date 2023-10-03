@@ -80,6 +80,10 @@ namespace Listener
 					string key7 = Encoding.UTF8.GetString(packet.data);
 					database.Load(string.IsNullOrEmpty(key7) ? Program.path : key7);
 					break;
+				case 8:
+				// Clear database
+					database.Clear();
+					break;
 				default:
 					return null;
 			}

@@ -48,6 +48,13 @@ namespace Beat
 						Program.database.Load(string.Empty);
 						Debug.OK("Database loaded!");
 						return;
+					case "keys":
+						Debug.OK("Keys in the database:");
+						foreach (string key in Program.database.keys)
+						{
+							Debug.Comment(key);
+						}
+						return;
 				}
 			}
 			Debug.Error("Unknown command");

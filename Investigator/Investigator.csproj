@@ -9,7 +9,7 @@
     <StartupObject>Investigator.Program</StartupObject>
     <NoWin32Manifest>true</NoWin32Manifest>
     <ApplicationIcon>C:\Users\David\OneDrive\Installers\Pictures\Database.ico</ApplicationIcon>
-    <Version>0.3</Version>
+    <Version>0.4</Version>
   </PropertyGroup>
 
   <ItemGroup>
