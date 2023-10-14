@@ -21,7 +21,7 @@ namespace Beat
 			Console.ForegroundColor = ConsoleColor.Blue;
 			Console.WriteLine("TheBlueLines");
 			Console.ForegroundColor = ConsoleColor.Cyan;
-			Console.WriteLine("Version: v0.4 IGNIS\n");
+			Console.WriteLine("Version: v0.5 IGNIS\n");
 		}
 		static void Main(string[] args)
 		{

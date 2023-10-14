@@ -17,7 +17,7 @@ namespace Listener
 			Debug.Print("Auram Server", ConsoleColor.Red, false);
 			Debug.Print(" by TTMC Corporation ", ConsoleColor.DarkGray, false);
 			Debug.Print("TheBlueLines", ConsoleColor.Blue);
-			Debug.Print("Version: v0.4 BEAM\n", ConsoleColor.Cyan);
+			Debug.Print("Version: v0.5 BEAM\n", ConsoleColor.Cyan);
 			Database database = new Database(File.Exists(path) ? path : null);
 			Handler handler = new(database);
 			Server server = new(13000, handler);

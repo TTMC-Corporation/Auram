@@ -38,7 +38,7 @@ namespace Listener
 				case 2:
 					List<byte> data = packet.data.ToList();
 					string key2 = Engine.GetString(data.ToArray());
-					data.RemoveRange(0, Engine.PrefixedString(key2).Length);
+					data.RemoveRange(0, Engine.Prefixed(key2).Length);
 					string value = Encoding.UTF8.GetString(data.ToArray());
 					database.Set(key2, value);
 					break;
@@ -46,7 +46,7 @@ namespace Listener
 				case 3:
 					List<byte> list = packet.data.ToList();
 					string key3 = Engine.GetString(list.ToArray());
-					list.RemoveRange(0, Engine.PrefixedString(key3).Length);
+					list.RemoveRange(0, Engine.Prefixed(key3).Length);
 					string text = Encoding.UTF8.GetString(list.ToArray());
 					bool addCheck = database.Add(key3, text);
 					return new Packet()
@@ -68,7 +68,7 @@ namespace Listener
 					return new Packet()
 					{
 						id = 5,
-						data = Engine.SerializeStringArray(database.keys)
+						data = Engine.Serialize(database.keys)
 					};
 				// Save database
 				case 6:

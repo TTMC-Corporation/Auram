@@ -35,7 +35,7 @@ namespace TTMC.Auram
 					Packet? resp = SendPacket(packet);
 					if (resp != null)
 					{
-						return Engine.DeserializeStringArray(resp.data);
+						return Engine.Deserialize<string[]>(resp.data);
 					}
 				}
 				else
@@ -67,7 +67,7 @@ namespace TTMC.Auram
 				Packet packet = new()
 				{
 					id = 3,
-					data = Engine.Combine(Engine.PrefixedString(key), value)
+					data = Engine.Combine(Engine.Prefixed(key), value)
 				};
 				Packet? resp = SendPacket(packet);
 				if (resp != null)
@@ -84,6 +84,14 @@ namespace TTMC.Auram
 		public bool Add(string key, string value)
 		{
 			return Add(key, Encoding.UTF8.GetBytes(value));
+		}
+		public bool Add(string key, char value)
+		{
+			return Add(key, BitConverter.GetBytes(value));
+		}
+		public bool Add(string key, bool value)
+		{
+			return Add(key, BitConverter.GetBytes(value));
 		}
 		public bool Add(string key, int value)
 		{
@@ -109,6 +117,14 @@ namespace TTMC.Auram
 		{
 			return Add(key, BitConverter.GetBytes(value));
 		}
+		public bool Add(string key, float value)
+		{
+			return Add(key, BitConverter.GetBytes(value));
+		}
+		public bool Add(string key, double value)
+		{
+			return Add(key, BitConverter.GetBytes(value));
+		}
 		public bool Add(string key, Guid value)
 		{
 			return Add(key, value.ToByteArray());
@@ -121,6 +137,18 @@ namespace TTMC.Auram
 		{
 			return Add(key, value.ToArgb());
 		}
+		public bool Add(string key, string[] value)
+		{
+			return Add(key, Engine.Serialize(value));
+		}
+		public bool Add(string key, int[] value)
+		{
+			return Add(key, Engine.Serialize(value));
+		}
+		public bool Add(string key, uint[] value)
+		{
+			return Add(key, Engine.Serialize(value));
+		}
 		public void Set(string key, byte[] value)
 		{
 			if (client != null && handler != null)
@@ -128,7 +156,7 @@ namespace TTMC.Auram
 				Packet packet = new()
 				{
 					id = 2,
-					data = Engine.Combine(Engine.PrefixedString(key), value)
+					data = Engine.Combine(Engine.Prefixed(key), value)
 				};
 				client.SendPacket(packet);
 			}
@@ -140,6 +168,14 @@ namespace TTMC.Auram
 		public void Set(string key, string value)
 		{
 			Set(key, Encoding.UTF8.GetBytes(value));
+		}
+		public void Set(string key, char value)
+		{
+			Set(key, BitConverter.GetBytes(value));
+		}
+		public void Set(string key, bool value)
+		{
+			Set(key, BitConverter.GetBytes(value));
 		}
 		public void Set(string key, int value)
 		{
@@ -165,6 +201,14 @@ namespace TTMC.Auram
 		{
 			Set(key, BitConverter.GetBytes(value));
 		}
+		public void Set(string key, float value)
+		{
+			Set(key, BitConverter.GetBytes(value));
+		}
+		public void Set(string key, double value)
+		{
+			Set(key, BitConverter.GetBytes(value));
+		}
 		public void Set(string key, Guid value)
 		{
 			Set(key, value.ToByteArray());
@@ -176,6 +220,18 @@ namespace TTMC.Auram
 		public void Set(string key, Color value)
 		{
 			Set(key, value.ToArgb());
+		}
+		public void Set(string key, string[] value)
+		{
+			Set(key, Engine.Serialize(value));
+		}
+		public void Set(string key, int[] value)
+		{
+			Set(key, Engine.Serialize(value));
+		}
+		public void Set(string key, uint[] value)
+		{
+			Set(key, Engine.Serialize(value));
 		}
 		public byte[] Get(string key)
 		{
@@ -209,53 +265,73 @@ namespace TTMC.Auram
 			}
 			return new byte[0];
 		}
-		public T? Get<T>(string key)
+		public T Get<T>(string key)
 		{
 			if (typeof(T) == typeof(byte[]))
 			{
 				return (T)(object)Get(key);
 			}
-			if (typeof(T) == typeof(string))
+			else if (typeof(T) == typeof(string))
 			{
 				return (T)(object)Encoding.UTF8.GetString(Get(key));
 			}
-			if (typeof(T) == typeof(int))
+			else if (typeof(T) == typeof(char))
+			{
+				return (T)(object)BitConverter.ToChar(Get(key));
+			}
+			else if (typeof(T) == typeof(bool))
+			{
+				return (T)(object)BitConverter.ToBoolean(Get(key));
+			}
+			else if (typeof(T) == typeof(int))
 			{
 				return (T)(object)BitConverter.ToInt32(Get(key));
 			}
-			if (typeof(T) == typeof(uint))
+			else if (typeof(T) == typeof(uint))
 			{
 				return (T)(object)BitConverter.ToUInt32(Get(key));
 			}
-			if (typeof(T) == typeof(short))
+			else if (typeof(T) == typeof(short))
 			{
 				return (T)(object)BitConverter.ToInt16(Get(key));
 			}
-			if (typeof(T) == typeof(ushort))
+			else if (typeof(T) == typeof(ushort))
 			{
 				return (T)(object)BitConverter.ToUInt16(Get(key));
 			}
-			if (typeof(T) == typeof(long))
+			else if (typeof(T) == typeof(long))
 			{
 				return (T)(object)BitConverter.ToInt64(Get(key));
 			}
-			if (typeof(T) == typeof(ulong))
+			else if (typeof(T) == typeof(ulong))
 			{
 				return (T)(object)BitConverter.ToUInt64(Get(key));
 			}
-			if (typeof(T) == typeof(Guid))
+			else if (typeof(T) == typeof(float))
+			{
+				return (T)(object)BitConverter.ToSingle(Get(key));
+			}
+			else if (typeof(T) == typeof(double))
+			{
+				return (T)(object)BitConverter.ToDouble(Get(key));
+			}
+			else if (typeof(T) == typeof(Guid))
 			{
 				return (T)(object)new Guid(Get(key));
 			}
-			if (typeof(T) == typeof(DateTime))
+			else if (typeof(T) == typeof(DateTime))
 			{
 				return (T)(object)DateTime.FromBinary(BitConverter.ToInt64(Get(key)));
 			}
-			if (typeof(T) == typeof(Color))
+			else if (typeof(T) == typeof(Color))
 			{
 				return (T)(object)Color.FromArgb(BitConverter.ToInt32(Get(key)));
 			}
-			return default(T);
+			else if (typeof(T) == typeof(string[]) || typeof(T) == typeof(char[]) || typeof(T) == typeof(bool[]) || typeof(T) == typeof(int[]) || typeof(T) == typeof(uint[]) || typeof(T) == typeof(short[]) || typeof(T) == typeof(ushort[]) || typeof(T) == typeof(long[]) || typeof(T) == typeof(ulong[]) || typeof(T) == typeof(float[]) || typeof(T) == typeof(double[]) || typeof(T) == typeof(Guid[]) || typeof(T) == typeof(DateTime[]) || typeof(T) == typeof(Color[]))
+			{
+				return Engine.Deserialize<T>(Get(key));
+			}
+			throw new("Invalid type");
 		}
 		public bool Remove(string key)
 		{
