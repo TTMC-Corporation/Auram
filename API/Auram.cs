@@ -141,11 +141,55 @@ namespace TTMC.Auram
 		{
 			return Add(key, Engine.Serialize(value));
 		}
+		public bool Add(string key, char[] value)
+		{
+			return Add(key, Engine.Serialize(value));
+		}
+		public bool Add(string key, bool[] value)
+		{
+			return Add(key, Engine.Serialize(value));
+		}
 		public bool Add(string key, int[] value)
 		{
 			return Add(key, Engine.Serialize(value));
 		}
 		public bool Add(string key, uint[] value)
+		{
+			return Add(key, Engine.Serialize(value));
+		}
+		public bool Add(string key, short[] value)
+		{
+			return Add(key, Engine.Serialize(value));
+		}
+		public bool Add(string key, ushort[] value)
+		{
+			return Add(key, Engine.Serialize(value));
+		}
+		public bool Add(string key, long[] value)
+		{
+			return Add(key, Engine.Serialize(value));
+		}
+		public bool Add(string key, ulong[] value)
+		{
+			return Add(key, Engine.Serialize(value));
+		}
+		public bool Add(string key, float[] value)
+		{
+			return Add(key, Engine.Serialize(value));
+		}
+		public bool Add(string key, double[] value)
+		{
+			return Add(key, Engine.Serialize(value));
+		}
+		public bool Add(string key, Guid[] value)
+		{
+			return Add(key, Engine.Serialize(value));
+		}
+		public bool Add(string key, DateTime[] value)
+		{
+			return Add(key, Engine.Serialize(value));
+		}
+		public bool Add(string key, Color[] value)
 		{
 			return Add(key, Engine.Serialize(value));
 		}
@@ -225,11 +269,55 @@ namespace TTMC.Auram
 		{
 			Set(key, Engine.Serialize(value));
 		}
+		public void Set(string key, char[] value)
+		{
+			Set(key, Engine.Serialize(value));
+		}
+		public void Set(string key, bool[] value)
+		{
+			Set(key, Engine.Serialize(value));
+		}
 		public void Set(string key, int[] value)
 		{
 			Set(key, Engine.Serialize(value));
 		}
 		public void Set(string key, uint[] value)
+		{
+			Set(key, Engine.Serialize(value));
+		}
+		public void Set(string key, short[] value)
+		{
+			Set(key, Engine.Serialize(value));
+		}
+		public void Set(string key, ushort[] value)
+		{
+			Set(key, Engine.Serialize(value));
+		}
+		public void Set(string key, long[] value)
+		{
+			Set(key, Engine.Serialize(value));
+		}
+		public void Set(string key, ulong[] value)
+		{
+			Set(key, Engine.Serialize(value));
+		}
+		public void Set(string key, float[] value)
+		{
+			Set(key, Engine.Serialize(value));
+		}
+		public void Set(string key, double[] value)
+		{
+			Set(key, Engine.Serialize(value));
+		}
+		public void Set(string key, Guid[] value)
+		{
+			Set(key, Engine.Serialize(value));
+		}
+		public void Set(string key, DateTime[] value)
+		{
+			Set(key, Engine.Serialize(value));
+		}
+		public void Set(string key, Color[] value)
 		{
 			Set(key, Engine.Serialize(value));
 		}
